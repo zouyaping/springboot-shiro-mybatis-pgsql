@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdl.shirodemo.mapper.AssetMapper">
+    <resultMap id="assetMap" type="com.xdl.shirodemo.entity.Asset">
+        <result column="asset_id" jdbcType="INTEGER" property="assetId"></result>
+        <result column="asset_no" jdbcType="VARCHAR" property="assetNo"></result>
+        <result column="asset_name" jdbcType="VARCHAR" property="assetName"></result>
+        <result column="asset_type" jdbcType="VARCHAR" property="assetType"></result>
+        <result column="asset_status" jdbcType="VARCHAR" property="assetStatus"></result>
+        <result column="asset_nature" jdbcType="VARCHAR" property="assetNature"></result>
+        <result column="borrow_person" jdbcType="VARCHAR" property="borrowPerson"></result>
+        <result column="borrow_time" jdbcType="INTEGER" property="borrowTime"></result>
+        <result column="asset_value" jdbcType="FLOAT" property="assetValue"></result>
+        <result column="asset_time" jdbcType="VARCHAR" property="buyTime"></result>
+        <result column="stored_section" jdbcType="VARCHAR" property="storedSection"></result>
+    </resultMap>
+    <select id="getAssetList" resultType="com.xdl.shirodemo.entity.Asset">
+      select * from myschema.asset order by asset_no
+    </select>
+
+    <select id="getAssetsByName" resultType="com.xdl.shirodemo.entity.Asset" parameterType="java.lang.String">
+        select * from myschema.asset where asset_name like '%${name}%' order by asset_no
+    </select>
+
+    <insert id="insertAsset" parameterType="com.xdl.shirodemo.entity.AssetNoId">
+        insert into myschema.asset(asset_no,asset_name,asset_type,asset_status,asset_nature,borrow_person,borrow_time,asset_value,buy_time,stored_section)
+        values(#{assetNo},#{assetName},#{assetType},#{assetStatus},#{assetNature},#{borrowPerson},
+        to_date(#{borrowTime},'yyyy-MM-dd'),#{assetValue},to_date(#{buyTime},'yyyy-MM-dd'),#{storedSection})
+    </insert>
+
+    <update id="deleteAssetList" parameterType="java.util.ArrayList">
+        delete from myschema.asset where asset_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <insert id="insertAssetBatch" parameterType="java.util.ArrayList" useGeneratedKeys="false">
+        insert into myschema.asset(asset_no,asset_name,asset_type,asset_status,asset_nature,borrow_person,borrow_time,asset_value,buy_time,stored_section)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+              #{item.assetNo},
+              #{item.assetName},
+              #{item.assetType},
+              #{item.assetStatus},
+              #{item.assetNature},
+              #{item.borrowPerson},
+              to_date(#{item.borrowTime},'yyyy-MM-dd'),
+              #{item.assetValue},
+              to_date(#{item.buyTime},'yyyy-MM-dd'),
+              #{item.storedSection}
+            )
+        </foreach>
+
+    </insert>
+
+</mapper>

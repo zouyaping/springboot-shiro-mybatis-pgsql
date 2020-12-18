@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdl.shirodemo.mapper.PermissionMapper">
+    <resultMap id="PermissionMap" type="com.xdl.shirodemo.entity.Permission">
+        <result column="id" jdbcType="INTEGER" property="id"></result>
+        <result column="permission_name" jdbcType="VARCHAR" property="permissionsName"></result>
+    </resultMap>
+    <select id="selectPermByUserName" resultType="com.xdl.shirodemo.entity.Permission">
+        select distinct * from myschema.permission
+        where id in (select permission_id from myschema.role_permission where role_id in (
+        select role_id from myschema.user_role where user_id in (
+        select id from myschema.user where name=#{userName}
+        )
+        ))
+    </select>
+
+</mapper>

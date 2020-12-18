@@ -1,0 +1,12 @@
+server:
+  port: 8080
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.xdl.shirodemo.entity
+
+spring:
+  datasource:
+    username: myroot
+    password: 123456
+    url: jdbc:postgresql://139.186.67.252:5432/study_database
+    driver-class-name: org.postgresql.Driver

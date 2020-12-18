@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xdl.shirodemo.mapper.UserMapper">
+    <resultMap id="UserMap" type="com.xdl.shirodemo.entity.User">
+        <result column="id" jdbcType="INTEGER" property="id"></result>
+        <result column="name" jdbcType="VARCHAR" property="userName"></result>
+        <result column="password" jdbcType="VARCHAR" property="passWord"></result>
+    </resultMap>
+    <select id="selectUserByUserName" resultMap="UserMap">
+        select * from mychema.user where name=#{userName}
+    </select>
+    <select id="getPassWordByName" resultType="java.lang.String">
+        select password from myschema.user where name=#{name}
+    </select>
+    <select id="selectUserByUser" resultMap="UserMap">
+        select * from myschema.user where name=#{userName} and password=#{passWord}
+    </select>
+</mapper>
