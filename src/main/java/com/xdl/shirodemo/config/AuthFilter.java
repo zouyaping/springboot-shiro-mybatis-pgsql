@@ -107,7 +107,7 @@ public class AuthFilter extends AuthenticatingFilter {
             httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
             // httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin());
             httpResponse.setCharacterEncoding("UTF-8");
-            httpResponse.getWriter().print(JSONObject.toJSONString(Result.error("token过期！！！")));
+            httpResponse.getWriter().print(JSONObject.toJSONString(Result.tokenExpire()));
             return false;
         }
     }

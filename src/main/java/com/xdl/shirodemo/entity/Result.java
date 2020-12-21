@@ -14,6 +14,8 @@ public class Result
 
 	public static final int CODE_ERROR = 50000;
 
+	public static final int CODE_TOKEN_EXPIRE = 50001;
+
 	public static final String LEVEL_ERROR = "error";
 
 	public static final String LEVEL_INFO = "info";
@@ -177,6 +179,14 @@ public class Result
 		return new Result(Result.CODE_ERROR, Result.LEVEL_ERROR, message, null);
 	}
 
+
+	/**
+	 * @Description: 认证过期
+	 * @return Result
+	 */
+	public static Result tokenExpire(){
+		return new Result(Result.CODE_TOKEN_EXPIRE,Result.LEVEL_ERROR,"认证过期！！！",null);
+	}
 
 	public String getLevel()
 	{
